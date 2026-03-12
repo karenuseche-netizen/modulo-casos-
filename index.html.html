@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Guia HIL - Biometria v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1f1f1f;
+      --border: #2a2a2a;
+      --white: #f5f5f5;
+      --grey: #888;
+      --grey-light: #bbb;
+      --danger: #ff4d4d;
+      --warn: #f5a623;
+      --ok: #4caf50;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* nav */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 60px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13,13,13,0.92);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    /* hero */
+
+    .hero {
+      min-height: 100vh;
+      padding: 100px 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -80px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 20px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--grey);
+      display: block;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      max-width: 800px;
+    }
+
+    .hero h1 span {
+      color: var(--grey);
+    }
+
+    .hero-desc {
+      margin-top: 28px;
+      max-width: 520px;
+      font-size: 16px;
+      color: var(--grey-light);
+      line-height: 1.8;
+    }
+
+    .scroll-hint {
+      margin-top: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-hint-line {
+      width: 1px;
+      height: 40px;
+      background: var(--grey);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* sections */
+
+    section {
+      padding: 100px 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 40px;
+    }
+
+    h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    /* grids */
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* card */
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: #444;
+      transform: translateY(-2px);
+    }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--grey-light);
+      line-height: 1.8;
+    }
+
+    /* module card */
+
+    .mod-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .mod-card:hover {
+      border-color: #444;
+      transform: translateY(-2px);
+    }
+
+    .mod-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mod-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--grey);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .mod-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mod-desc {
+      font-size: 13px;
+      color: var(--grey-light);
+      line-height: 1.7;
+    }
+
+    /* ctrl card */
+
+    .ctrl-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .ctrl-card:hover {
+      border-color: #444;
+      transform: translateY(-2px);
+    }
+
+    .ctrl-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ctrl-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--grey-light);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .ctrl-body h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .ctrl-body p {
+      font-size: 13px;
+      color: var(--grey-light);
+      line-height: 1.6;
+    }
+
+    /* steps */
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step {
+      display: flex;
+      gap: 28px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--border);
+      line-height: 1;
+      min-width: 60px;
+      transition: color 0.2s;
+    }
+
+    .step:hover .step-num {
+      color: var(--grey);
+    }
+
+    .step-body h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .step-body p {
+      font-size: 14px;
+      color: var(--grey-light);
+    }
+
+    .step-body code {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--white);
+      font-family: monospace;
+    }
+
+    /* badges */
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .badge-ok   { background: rgba(76,175,80,0.12);  color: var(--ok);         border: 1px solid rgba(76,175,80,0.25); }
+    .badge-bad  { background: rgba(255,77,77,0.12);  color: var(--danger);     border: 1px solid rgba(255,77,77,0.25); }
+    .badge-warn { background: rgba(245,166,35,0.12); color: var(--warn);       border: 1px solid rgba(245,166,35,0.2); }
+    .badge-grey { background: rgba(136,136,136,0.12);color: var(--grey-light); border: 1px solid var(--border); }
+
+    .dot-sm {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      display: inline-block;
+    }
+
+    /* alerts */
+
+    .alert {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px 22px;
+      border-radius: 10px;
+      margin: 24px 0;
+    }
+
+    .alert-warn   { background: rgba(245,166,35,0.07); border: 1px solid rgba(245,166,35,0.2); }
+    .alert-danger { background: rgba(255,77,77,0.07);  border: 1px solid rgba(255,77,77,0.2);  }
+    .alert-ok     { background: rgba(76,175,80,0.07);  border: 1px solid rgba(76,175,80,0.2);  }
+
+    .alert svg { flex-shrink: 0; margin-top: 2px; }
+
+    .alert p {
+      font-size: 14px;
+      color: var(--grey-light);
+    }
+
+    .alert strong { color: var(--white); }
+
+    /* table */
+
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr { background: var(--surface2); }
+
+    th {
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 14px 20px;
+      font-size: 13px;
+      color: var(--grey-light);
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: var(--surface2); }
+
+    /* id mockup (Colombia) */
+
+    .id-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: 270px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .id-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--grey), transparent);
+    }
+
+    .id-header {
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+
+    .id-body {
+      display: flex;
+      gap: 12px;
+    }
+
+    .id-photo {
+      width: 68px;
+      height: 82px;
+      background: var(--border);
+      border-radius: 5px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .id-photo svg { opacity: 0.25; }
+
+    .id-fields {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .id-field label {
+      display: block;
+      font-size: 7px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      opacity: 0.7;
+      margin-bottom: 3px;
+    }
+
+    .id-bar {
+      height: 8px;
+      border-radius: 3px;
+      background: var(--border);
+    }
+
+    .id-bar.long  { width: 100%; }
+    .id-bar.mid   { width: 70%;  }
+    .id-bar.short { width: 45%;  }
+
+    .id-barcode {
+      height: 18px;
+      margin-top: 10px;
+      border-radius: 3px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .id-barcode::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 2px,
+        transparent 2px, transparent 5px
+      );
+    }
+
+    .doc-label {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+
+    /* check list */
+
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--grey-light);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .dot-ok   { background: var(--ok); }
+    .dot-bad  { background: var(--danger); }
+    .dot-warn { background: var(--warn); }
+
+    /* case review mockup */
+
+    .review-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .review-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .review-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .review-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 7px 16px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      border: none;
+    }
+
+    .btn-olvidar  { background: var(--surface); color: var(--grey-light); border: 1px solid var(--border); }
+    .btn-rechazar { background: rgba(255,77,77,0.15); color: var(--danger); border: 1px solid rgba(255,77,77,0.3); }
+
+    .review-panels {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 1fr;
+      gap: 12px;
+    }
+
+    .rpanel {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .rp-label {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 10px;
+    }
+
+    .rp-row {
+      margin-bottom: 8px;
+    }
+
+    .rp-row label {
+      display: block;
+      font-size: 8px;
+      color: var(--grey);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 3px;
+    }
+
+    .rp-row span {
+      font-size: 11px;
+      color: var(--grey-light);
+    }
+
+    .video-box {
+      background: var(--border);
+      border-radius: 8px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .video-box svg {
+      stroke: #888;
+      fill: none;
+    }
+
+    .speed-btns {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .speed-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 9px;
+      color: var(--grey);
+      cursor: pointer;
+    }
+
+    .speed-btn.on {
+      background: var(--white);
+      color: var(--bg);
+      border-color: var(--white);
+    }
+
+    .otp-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      font-family: monospace;
+      font-size: 16px;
+      color: var(--warn);
+      text-align: center;
+      letter-spacing: 6px;
+      margin-bottom: 6px;
+    }
+
+    .doc-img {
+      background: var(--border);
+      border-radius: 6px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .selfie-box {
+      background: var(--border);
+      border-radius: 8px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* modal preview */
+
+    .modal-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 560px;
+      margin-top: 28px;
+    }
+
+    .modal-box h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .modal-sub {
+      font-size: 12px;
+      color: var(--grey-light);
+      margin-bottom: 20px;
+    }
+
+    .modal-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .modal-field label {
+      display: block;
+      font-size: 10px;
+      color: var(--grey);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .field-val {
+      background: var(--bg);
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--grey-light);
+    }
+
+    .field-val.empty {
+      color: var(--grey);
+      font-style: italic;
+    }
+
+    .modal-imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-img {
+      background: var(--border);
+      border-radius: 8px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .modal-img svg { stroke: #666; fill: none; }
+
+    .modal-btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn-cancel  { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 20px; font-size: 12px; font-weight: 600; color: var(--grey-light); cursor: pointer; }
+    .btn-consult { background: #2563eb; border: none; border-radius: 8px; padding: 9px 20px; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer; }
+
+    /* bandeja preview */
+
+    .bandeja {
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .bandeja-header {
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bandeja-header span {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .bandeja-ctrls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .bandeja-ctrl {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 10px;
+      color: var(--grey);
+    }
+
+    .btable { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .btable th { padding: 8px 14px; font-size: 10px; letter-spacing: 0.1em; }
+    .btable td { padding: 8px 14px; }
+
+    .b-review {
+      background: rgba(245,166,35,0.12);
+      color: #f5a623;
+      border: 1px solid rgba(245,166,35,0.3);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .b-action {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* criteria cards */
+
+    .criteria-grid {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .crit-card {
+      width: 148px;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .crit-card.ok  { background: rgba(76,175,80,0.07);  border: 1px solid rgba(76,175,80,0.35); }
+    .crit-card.bad { background: rgba(255,77,77,0.07);   border: 1px solid rgba(255,77,77,0.35); }
+
+    .crit-thumb {
+      width: 110px;
+      height: 80px;
+      border-radius: 8px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .crit-thumb.ok  { background: #111;    border: 1px solid rgba(76,175,80,0.4);  }
+    .crit-thumb.bad { background: #1a0a0a; border: 1px solid rgba(255,77,77,0.4);  }
+
+    .crit-doc {
+      width: 110px;
+      height: 72px;
+      border-radius: 6px;
+      padding: 8px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .crit-doc.ok  { background: #111;    border: 1px solid rgba(76,175,80,0.5); }
+    .crit-doc.bad { background: #1a0a0a; border: 1px solid rgba(255,77,77,0.4); }
+
+    .crit-dot {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .crit-dot.ok  { background: #4caf50; }
+    .crit-dot.bad { background: #ff4d4d; }
+
+    .crit-status {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .crit-status.ok  { color: #4caf50; }
+    .crit-status.bad { color: #ff4d4d; }
+
+    .crit-desc {
+      font-size: 11px;
+      color: var(--grey-light);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* otp section */
+
+    .otp-section {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 28px 0;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .otp-panel {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      min-width: 200px;
+    }
+
+    /* countries */
+
+    .country-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--white);
+      color: var(--bg);
+      border-color: var(--white);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .country-block {
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .country-docs {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .country-info {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .country-info h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    /* glosario */
+
+    .glosario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .glosario-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .glosario-term {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .glosario-def {
+      font-size: 13px;
+      color: var(--grey-light);
+      line-height: 1.7;
+    }
+
+    .glosario-def a {
+      color: var(--grey-light);
+      text-decoration: underline;
+      font-size: 12px;
+    }
+
+    /* misc */
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    .mini-label {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 10px;
+    }
+
+    footer {
+      padding: 60px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--grey);
+    }
+
+    /* responsive */
+
+    @media (max-width: 768px) {
+      section, .hero, footer { padding: 60px 24px; }
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 42px; }
+      .review-panels { grid-template-columns: 1fr; }
+    }
+
+
+    /* ── HORARIOS ──
+       Para cambiar horarios: edita los textos dentro de cada .sslot en el HTML.
+       Para cambiar colores: edita las variables --sh-* de abajo. */
+    :root {
+      --sh-surface: #141414;
+      --sh-border:  #333;
+      --sh-accent:  #f5f5f5;
+    }
+    .schedule-section {
+      padding: 80px 80px;
+      background: var(--sh-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .schedule-eyebrow {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+    .schedule-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .schedule-note {
+      font-size: 13px;
+      color: var(--grey);
+      margin-bottom: 40px;
+    }
+    .schedule-slots {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .sslot {
+      background: var(--surface2);
+      border: 1px solid var(--sh-border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      min-width: 190px;
+      transition: border-color 0.2s;
+    }
+    .sslot:hover { border-color: #555; }
+    .sslot strong {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+    .sslot span {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    /* ── NOTICE NUEVO CLIENTE ── */
+    .new-client-notice {
+      background: rgba(255,255,255,0.03);
+      border-left: 2px solid var(--grey);
+      padding: 20px 28px;
+      margin-bottom: 40px;
+    }
+    .new-client-notice .notice-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+    .new-client-notice p {
+      font-size: 14px;
+      color: var(--grey-light);
+      line-height: 1.8;
+      max-width: 680px;
+    }
+
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">HIL &mdash; Biometría v2</div>
+  <ul class="nav-links">
+    <li><a href="#horarios">Horarios</a></li><li><a href="#acceso">Acceso</a></li>
+    <li><a href="#plataforma">Plataforma</a></li>
+    <li><a href="#casos">Casos</a></li>
+    <li><a href="#documentos">Documentos</a></li>
+    <li><a href="#paises">Países</a></li>
+    <li><a href="#glosario">Glosario</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<!--
+  ╔══════════════════════════════════════════════════╗
+  ║  HORARIOS — para actualizar, edita los textos   ║
+  ║  dentro de cada <span> en los .sslot de abajo.  ║
+  ║  Para cambiar colores edita las variables        ║
+  ║  --sh-from / --sh-to / --sh-accent en :root.    ║
+  ╚══════════════════════════════════════════════════╝
+-->
+<section class="hero" id="inicio">
+  <div class="hero-tag">Guía de Operador</div>
+  <h1>Human In<br>The <span>Loop</span></h1>
+  <p class="hero-desc">Sistema de verificación biométrica en tiempo real. Esta guía explica cómo operar, revisar casos y tomar decisiones correctas.</p>
+  <div class="scroll-hint">
+    <div class="scroll-hint-line"></div>
+    Desplázate para comenzar
+  </div>
+</section>
+
+<!-- 00 - QUE ES -->
+<section id="que-es">
+  <div class="sec-num">00 &mdash; Concepto</div>
+  <h2>¿Qué es HIL?</h2>
+
+
+  <div class="grid-2" style="gap: 28px; align-items: start;">
+    <div>
+      <p style="color: var(--grey-light); font-size: 15px; line-height: 1.9; margin-bottom: 20px;">
+        Human In The Loop (HIL) es un sistema de verificación humana en tiempo real, diseñado para intervenir cuando los procesos automáticos no logran validar correctamente la identidad, vivacidad o documentación de un usuario.
+      </p>
+      <p style="color: var(--grey-light); font-size: 15px; line-height: 1.9;">
+        Como operador, tu rol es revisar esos casos límite, analizarlos con criterio y tomar la decisión final: validar o rechazar.
+      </p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px;">
+        <span class="badge badge-ok"><span class="dot-sm"></span> Validar</span>
+        <span class="badge badge-bad"><span class="dot-sm"></span> Rechazar</span>
+        <span class="badge badge-warn"><span class="dot-sm"></span> Olvidar</span>
+        <span class="badge badge-grey"><span class="dot-sm"></span> Review</span>
+      </div>
+    </div>
+
+    <div class="grid-2" style="gap: 14px;">
+      <div class="card">
+        <div class="card-title">Tiempo máximo</div>
+        <p style="font-size: 32px; font-weight: 800; font-family: 'Syne', sans-serif; color: var(--white); margin-bottom: 4px;">3 min</p>
+        <p>Por caso. Superarlo implica incumplimiento del SLA asignado.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Tipos de paso</div>
+        <p>Liveness, Document Check y Facematch son los tres estados posibles de un caso.</p>
+      </div>
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="card-title">Objetivo</div>
+        <p>Asistir en tiempo real, reducir rechazos automáticos injustificados y verificar coincidencias faciales en casos límite.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 - ACCESO -->
+<section id="acceso">
+  <div class="sec-num">01 &mdash; Primer paso</div>
+  <h2>Acceso al sistema</h2>
+
+  <div style="display: flex; gap: 60px; flex-wrap: wrap; align-items: flex-start;">
+    <div style="min-width: 300px; max-width: 400px;">
+      <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 40px 36px;">
+        <h3 style="font-size: 24px; margin-bottom: 8px;">Iniciar sesión</h3>
+        <p style="color: var(--grey); font-size: 13px; margin-bottom: 32px;">Ingresa tus credenciales para acceder al sistema</p>
+
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); margin-bottom: 8px;">Correo electrónico</label>
+          <div style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; color: var(--grey-light); font-size: 14px;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="610e11041300050e1321040c11130412004f020e0c">[email&#160;protected]</a></div>
+        </div>
+
+        <div style="margin-bottom: 28px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+            <label style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey);">Contraseña</label>
+            <span style="font-size: 11px; color: var(--grey); text-decoration: underline; cursor: pointer;">¿Olvidaste tu contraseña?</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; color: var(--grey-light); font-size: 14px; letter-spacing: 3px;">···········</div>
+        </div>
+
+        <div style="background: var(--white); color: var(--bg); border-radius: 8px; padding: 14px; text-align: center; font-weight: 700; font-size: 14px; cursor: pointer;">Iniciar sesión</div>
+      </div>
+    </div>
+
+    <div style="flex: 1; min-width: 260px;">
+      <p style="color: var(--grey-light); font-size: 14px; margin-bottom: 28px;">Para tener acceso al sistema, el equipo de Tech Support debe asignarte una cuenta. Solicítalo internamente antes de continuar.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3>Solicita tu acceso</h3>
+            <p>Pide al equipo de Tech Support que te asignen usuario y contraseña internamente.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3>Ingresa al sistema</h3>
+            <p>Dirígete a <code>biometric-hil.pages.dev/cases</code> desde tu navegador.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3>Escribe tus credenciales</h3>
+            <p>Ingresa tu correo y contraseña. Usa el ícono del ojo para visualizar la contraseña mientras escribes.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-body">
+            <h3>Entra al sistema</h3>
+            <p>Si los datos son correctos, accederás a la pantalla principal de Casos Biométricos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 - PLATAFORMA -->
+<section id="plataforma">
+  <div class="sec-num">02 &mdash; Navegación</div>
+  <h2>Conoce la plataforma</h2>
+  <p style="color: var(--grey-light); max-width: 600px; margin-bottom: 40px; font-size: 15px;">Al ingresar correctamente, llegarás a la pantalla principal. Desde el menú lateral izquierdo puedes navegar entre los distintos módulos del sistema. <strong style="color:var(--white);">Este manual cubre únicamente el módulo de Casos Biométricos</strong> — los demás módulos se habilitan según el rol asignado y no están documentados aquí.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 32px;">
+
+    <!-- Dashboard — disponible -->
+    <div class="mod-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="mod-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+        <span style="font-size:9px;padding:3px 8px;border-radius:20px;background:rgba(136,136,136,0.1);color:var(--grey);border:1px solid var(--border);letter-spacing:.06em;text-transform:uppercase;">Disponible</span>
+      </div>
+      <div class="mod-title">Dashboard Home</div>
+      <div class="mod-desc">Vista general del sistema con métricas y resumen de actividad.</div>
+    </div>
+
+    <!-- Casos — ESTE MANUAL, resaltado -->
+    <div class="mod-card" style="border-color:#f5a623;background:rgba(245,166,35,0.04);position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--warn);"></div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="mod-icon" style="border-color:#6a4800;background:rgba(245,166,35,0.08);">
+          <svg viewBox="0 0 24 24" style="stroke:var(--warn)"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+        </div>
+        <span style="font-size:9px;padding:3px 8px;border-radius:20px;background:rgba(245,166,35,0.15);color:var(--warn);border:1px solid rgba(245,166,35,0.4);letter-spacing:.06em;text-transform:uppercase;font-weight:700;">Este manual</span>
+      </div>
+      <div class="mod-title" style="color:var(--white);">Casos Biométricos</div>
+      <div class="mod-desc">Aquí vive todo lo que cubre esta guía: revisión de casos, decisiones y criterios por país.</div>
+    </div>
+
+    <!-- Búsqueda — disponible -->
+    <div class="mod-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="mod-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <span style="font-size:9px;padding:3px 8px;border-radius:20px;background:rgba(136,136,136,0.1);color:var(--grey);border:1px solid var(--border);letter-spacing:.06em;text-transform:uppercase;">Disponible</span>
+      </div>
+      <div class="mod-title">Búsqueda Casos</div>
+      <div class="mod-desc">Para consultar un caso específico por UUID, teléfono u otros datos.</div>
+    </div>
+
+    <!-- Auditoría — según rol -->
+    <div class="mod-card" style="opacity:0.55;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <span style="font-size:9px;padding:3px 8px;border-radius:20px;background:rgba(136,136,136,0.08);color:#555;border:1px solid #333;letter-spacing:.06em;text-transform:uppercase;">Según rol</span>
+      </div>
+      <div class="mod-title">Auditoría</div>
+      <div class="mod-desc">Registro de actividad del bot y procesos automáticos.</div>
+    </div>
+
+    <!-- Reportes — según rol -->
+    <div class="mod-card" style="opacity:0.55;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="mod-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <span style="font-size:9px;padding:3px 8px;border-radius:20px;background:rgba(136,136,136,0.08);color:#555;border:1px solid #333;letter-spacing:.06em;text-transform:uppercase;">Según rol</span>
+      </div>
+      <div class="mod-title">Reportes</div>
+      <div class="mod-desc">Informes y estadísticas del sistema.</div>
+    </div>
+
+    <!-- Usuarios — según rol -->
+    <div class="mod-card" style="opacity:0.55;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="mod-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <span style="font-size:9px;padding:3px 8px;border-radius:20px;background:rgba(136,136,136,0.08);color:#555;border:1px solid #333;letter-spacing:.06em;text-transform:uppercase;">Según rol</span>
+      </div>
+      <div class="mod-title">Usuarios &amp; Gov. Entity</div>
+      <div class="mod-desc">Gestión de usuarios y entidades gubernamentales.</div>
+    </div>
+
+  </div>
+
+  <p style="font-size:13px;color:var(--grey);margin-bottom:32px;">Los módulos marcados como <span style="color:#555;font-weight:600;">Según rol</span> se habilitan automáticamente según los permisos que te asignen. Si tienes dudas sobre tu acceso, consulta con tu líder de equipo.</p>
+
+  <div class="divider"></div>
+  <h3>Controles superiores &mdash; Sección de Casos</h3>
+  <p style="color: var(--grey-light); font-size: 14px; margin-bottom: 24px;">En la parte superior de la sección Casos encontrarás tres controles:</p>
+
+  <div class="grid-3">
+    <div class="ctrl-card">
+      <div class="ctrl-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+      <div class="ctrl-body">
+        <h4>Notificaciones</h4>
+        <p>Activa las alertas del navegador para recibir avisos de nuevos casos en tiempo real sin tener que actualizar manualmente.</p>
+      </div>
+    </div>
+    <div class="ctrl-card">
+      <div class="ctrl-icon"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg></div>
+      <div class="ctrl-body">
+        <h4>Sonido</h4>
+        <p>Activa o desactiva el sonido de las notificaciones según tu preferencia y entorno de trabajo.</p>
+      </div>
+    </div>
+    <div class="ctrl-card">
+      <div class="ctrl-icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+      <div class="ctrl-body">
+        <h4>Actualizar</h4>
+        <p>Refresca manualmente la lista de casos si no llegan de forma automática.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 - CASOS -->
+<section id="casos">
+  <div class="sec-num">03 &mdash; Revisión</div>
+  <h2>Tabla de casos</h2>
+  <p style="color: var(--grey-light); max-width: 600px; margin-bottom: 36px; font-size: 15px;">La tabla central muestra todos los casos pendientes. Cada fila es un usuario que requiere verificación manual.</p>
+
+  <div class="table-wrap" style="margin-bottom: 12px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th><th>Compañía</th><th>Canal</th><th>Paso</th><th>Fecha</th><th>Estado</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Deivid Ramirez</td><td>Empresa XYZ</td><td>WhatsApp</td>
+          <td><span class="badge badge-grey">Liveness</span></td>
+          <td>11 Mar 2026</td>
+          <td><span class="badge badge-warn"><span class="dot-sm"></span> Review</span></td>
+          <td><span class="badge badge-grey" style="cursor:pointer;">Revisar</span></td>
+        </tr>
+        <tr>
+          <td>María Torres</td><td>Empresa ABC</td><td>WhatsApp</td>
+          <td><span class="badge badge-grey">Document Check</span></td>
+          <td>11 Mar 2026</td>
+          <td><span class="badge badge-warn"><span class="dot-sm"></span> Review</span></td>
+          <td><span class="badge badge-grey" style="cursor:pointer;">Revisar</span></td>
+        </tr>
+        <tr><td colspan="7" style="color: var(--grey);">No hay más casos en revisión por el momento.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size: 12px; color: var(--grey); margin-bottom: 40px;">El nombre del cliente se toma según como esté registrado en WhatsApp.</p>
+
+  <div class="grid-3" style="margin-bottom: 40px;">
+    <div class="card"><div class="card-title">Liveness</div><p>Prueba de vivacidad. El usuario graba un video mostrando que está vivo y presente en tiempo real.</p></div>
+    <div class="card"><div class="card-title">Document Check</div><p>El usuario cargó documentos de identidad que deben validarse contra la entidad gubernamental.</p></div>
+    <div class="card"><div class="card-title">Facematch</div><p>Comparación facial entre el video/selfie del usuario y la foto del documento de identidad.</p></div>
+  </div>
+
+  <div class="divider"></div>
+  <h3>Bandeja de casos</h3>
+  <p style="color: var(--grey-light); font-size: 14px; margin-bottom: 20px;">Así luce la lista cuando los casos están esperando revisión:</p>
+
+  <div class="bandeja">
+    <div class="bandeja-header">
+      <span>Casos Biométricos</span>
+      <div class="bandeja-ctrls">
+        <span class="bandeja-ctrl">Notif.</span>
+        <span class="bandeja-ctrl">Sonido</span>
+        <span class="bandeja-ctrl">Actualizar</span>
+      </div>
+    </div>
+    <table class="btable">
+      <thead>
+        <tr><th>CLIENTE</th><th>UUID</th><th>TELÉFONO</th><th>CANAL</th><th>COMPAÑÍA</th><th>FECHA</th><th>ESTADO</th><th>ACCIÓN</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color: var(--white); font-weight: 600;">E.L.A.L</td>
+          <td style="font-family: monospace; font-size: 10px; color: var(--grey);">424f686e-5173…</td>
+          <td>5939903500202</td><td>WhatsApp</td><td>Pyca</td>
+          <td style="font-size: 11px; color: var(--grey);">11/1/2026, 6:18 p.m.</td>
+          <td><span class="b-review">● Review</span></td>
+          <td><span class="b-action">Revisar →</span></td>
+        </tr>
+        <tr>
+          <td style="color: var(--white); font-weight: 600;">María Torres</td>
+          <td style="font-family: monospace; font-size: 10px; color: var(--grey);">b82d190a-3311…</td>
+          <td>5712345678</td><td>WhatsApp</td><td>Empresa ABC</td>
+          <td style="font-size: 11px; color: var(--grey);">11/1/2026, 6:05 p.m.</td>
+          <td><span class="b-review">● Review</span></td>
+          <td><span class="b-action">Revisar →</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-bottom: 8px;">Vista de revisión de un caso</h3>
+  <p style="color: var(--grey-light); font-size: 14px; margin-bottom: 16px;">Así se ve la pantalla cuando haces clic en <strong>Revisar</strong>:</p>
+
+  <div class="review-box">
+    <div class="mini-label">Pantalla de revisión</div>
+    <div class="review-top">
+      <div class="review-name">Revisión de Caso &mdash; E.L.A.L</div>
+      <div class="review-actions">
+        <button class="btn btn-olvidar">Olvidar</button>
+        <button class="btn btn-rechazar">Rechazar</button>
+      </div>
+    </div>
+
+    <div style="background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.3); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <div>
+        <div style="font-size: 11px; font-weight: 700; color: #f5a623; margin-bottom: 2px;">Mensaje de fallo:</div>
+        <div style="font-size: 11px; color: var(--grey-light);">No se logró validar el documento del usuario (Documento no aprobado)</div>
+      </div>
+    </div>
+
+    <div class="review-panels">
+      <div class="rpanel">
+        <div class="rp-label">Detalles del cliente</div>
+        <div style="font-size: 13px; font-weight: 700; margin-bottom: 10px;">E.L.A.L</div>
+        <div class="rp-row"><label>UUID</label><span style="font-family:monospace;font-size:9px;color:var(--grey);">424f686e-5173-44c87-f0ec0</span></div>
+        <div class="rp-row"><label>Teléfono</label><span>5939903500202</span></div>
+        <div class="rp-row"><label>Canal</label><span>WhatsApp</span></div>
+        <div class="rp-row"><label>Compañía</label><span>Pyca</span></div>
+        <div class="rp-row"><label>Fecha</label><span>11/1/2026, 6:18:09 p.m.</span></div>
+        <div style="margin-top:8px;">
+          <div style="font-size:9px;color:var(--grey);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">ESTADO</div>
+          <span class="badge badge-warn"><span class="dot-sm"></span> Review</span>
+          <div style="font-size:10px;color:var(--grey-light);margin-top:4px;">Iniciado</div>
+        </div>
+        <div style="margin-top:12px;background:#1e3a6e;border:1px solid #2a4a8e;border-radius:6px;padding:8px 10px;font-size:10px;color:#6ab0ff;text-align:center;cursor:pointer;font-weight:600;">Consultar entidad Gubernamental</div>
+      </div>
+
+      <div class="rpanel">
+        <div class="rp-label">Video de Liveness</div>
+        <div class="video-box">
+          <svg width="36" height="36" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <div style="position:absolute;bottom:6px;right:6px;display:flex;gap:8px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </div>
+        </div>
+        <div class="speed-btns">
+          <span class="speed-btn">0.8x</span><span class="speed-btn on">1x</span><span class="speed-btn">1.8x</span><span class="speed-btn">2x</span>
+        </div>
+        <div class="rp-label">OTP</div>
+        <div class="otp-box">7 4 2 A</div>
+        <p style="font-size:10px;color:var(--grey);margin-top:6px;">El usuario debe pronunciar este código. Si no coincide &rarr; rechazar.</p>
+      </div>
+
+      <div class="rpanel">
+        <div class="rp-label">Documentos de Identidad</div>
+        <div class="doc-img">
+          <svg width="22" height="22" viewBox="0 0 24 24" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        </div>
+        <div class="rp-label" style="margin-top:10px;">Selfie de Liveness</div>
+        <div class="selfie-box">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-box">
+    <div class="mini-label">Modal &mdash; Consultar entidad Gubernamental (Ecuador)</div>
+    <h4>Consultar entidad Gubernamental</h4>
+    <div class="modal-sub">Ingrese los datos para consultar en el Registro Civil</div>
+    <div class="modal-fields">
+      <div class="modal-field">
+        <label>Cédula</label>
+        <div class="field-val">171632987-7</div>
+      </div>
+      <div class="modal-field">
+        <label>Código Dactilar</label>
+        <div class="field-val empty">Ingrese código dactilar</div>
+      </div>
+    </div>
+    <div class="modal-imgs">
+      <div class="modal-img">
+        <svg width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        <span style="position:absolute;top:5px;right:5px;background:rgba(255,255,255,0.06);border-radius:4px;padding:2px 5px;font-size:8px;color:var(--grey);">Ampliar</span>
+      </div>
+      <div class="modal-img">
+        <svg width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      </div>
+    </div>
+    <div class="modal-btns">
+      <span class="btn-cancel">Cancelar</span>
+      <span class="btn-consult">Consultar entidad Gubernamental</span>
+    </div>
+  </div>
+
+  <div class="alert alert-danger" style="margin-top: 28px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p>Si no tomas una decisión en <strong>3 minutos</strong>, estarías incumpliendo con el SLA. El objetivo es permitir que el usuario continúe interactuando con el bot.</p>
+  </div>
+</section>
+
+<!-- 04 - DOCUMENT CHECK -->
+<section id="documentos">
+  <div class="sec-num">04 &mdash; Verificación</div>
+  <h2>Document Check</h2>
+  <p style="color: var(--grey-light); max-width: 640px; margin-bottom: 44px; font-size: 15px;">Cuando un caso llega por Document Check, revisa el documento del usuario con los siguientes criterios antes de consultar la entidad gubernamental.</p>
+
+  <h3>Criterios &mdash; Liveness</h3>
+  <p style="color: var(--grey-light); font-size: 13px; margin-bottom: 20px;">Ejemplos de casos aprobados y rechazados durante la verificación de vivacidad:</p>
+
+  <div class="criteria-grid">
+    <div class="crit-card ok">
+      <div class="crit-thumb ok">
+        <svg width="44" height="52" viewBox="0 0 44 52" fill="none"><circle cx="22" cy="17" r="12" fill="#223322" stroke="#4caf50" stroke-width="1.5"/><path d="M4 50c0-12 36-12 36 0" fill="#223322" stroke="#4caf50" stroke-width="1.5"/></svg>
+        <div class="crit-dot ok"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="crit-status ok">APROBADO</div>
+      <div class="crit-desc">Persona real, rostro visible, bien iluminada</div>
+    </div>
+
+    <div class="crit-card ok">
+      <div class="crit-thumb ok">
+        <svg width="44" height="52" viewBox="0 0 44 52" fill="none"><circle cx="22" cy="17" r="12" fill="#223322" stroke="#4caf50" stroke-width="1.5"/><path d="M4 50c0-12 36-12 36 0" fill="#223322" stroke="#4caf50" stroke-width="1.5"/></svg>
+        <div style="position:absolute;bottom:5px;left:50%;margin-left:-18px;background:#162b16;border:1px solid rgba(76,175,80,0.5);border-radius:4px;padding:2px 6px;font-family:monospace;font-size:9px;color:#4caf50;">4729</div>
+        <div class="crit-dot ok"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="crit-status ok">APROBADO</div>
+      <div class="crit-desc">OTP pronunciado correctamente</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-thumb bad">
+        <div style="width:68px;height:52px;border:2px solid #ff4d4d;border-radius:5px;display:flex;align-items:center;justify-content:center;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="5" stroke="#ff4d4d" stroke-width="1.3"/><path d="M4 20c0-6 16-6 16 0" stroke="#ff4d4d" stroke-width="1.3"/></svg>
+        </div>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">Foto impresa o pantalla mostrada a cámara</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-thumb bad">
+        <div style="width:68px;height:52px;background:rgba(255,77,77,0.08);border-radius:4px;display:flex;align-items:center;justify-content:center;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="5" stroke="rgba(255,77,77,0.4)" stroke-width="1.3"/><path d="M4 20c0-6 16-6 16 0" stroke="rgba(255,77,77,0.4)" stroke-width="1.3"/></svg>
+        </div>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">Imagen borrosa o sin foco</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-thumb bad">
+        <div style="width:68px;height:52px;border:2px solid rgba(255,77,77,0.5);border-radius:5px;display:flex;align-items:center;justify-content:center;">
+          <div style="background:#ff4d4d;color:#fff;font-size:7px;font-weight:800;padding:3px 8px;border-radius:3px;letter-spacing:0.1em;">OTP MAL</div>
+        </div>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">OTP incorrecto o no pronunciado</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-thumb bad">
+        <div style="width:52px;height:52px;background:rgba(255,77,77,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,77,77,0.5)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        </div>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">Rostro cubierto o no visible</div>
+    </div>
+  </div>
+
+  <div class="otp-section">
+    <div>
+      <div class="mini-label" style="margin-bottom:12px;">Cómo se ve el OTP en el sistema</div>
+      <div class="otp-panel">
+        <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--grey);margin-bottom:6px;">Lo que dice el usuario</div>
+        <div style="font-size:15px;color:var(--white);font-weight:500;margin-bottom:16px;">dos-uno-ocho-ocho</div>
+        <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--grey);margin-bottom:6px;">OTP del sistema</div>
+        <div style="font-size:24px;font-weight:800;font-family:'Syne',sans-serif;color:var(--white);letter-spacing:8px;">4 7 2 9</div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:240px;display:flex;flex-direction:column;gap:10px;">
+      <div style="background:rgba(76,175,80,0.06);border:1px solid rgba(76,175,80,0.25);border-radius:10px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
+        <div class="dot dot-ok" style="margin-top:4px;"></div>
+        <p style="font-size:13px;color:var(--grey-light);margin:0;">El usuario dice <strong style="color:var(--white);">"cuatro-siete-dos-nueve"</strong> tal como aparece &rarr; caso aprobado en OTP.</p>
+      </div>
+      <div style="background:rgba(255,77,77,0.06);border:1px solid rgba(255,77,77,0.25);border-radius:10px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
+        <div class="dot dot-bad" style="margin-top:4px;"></div>
+        <p style="font-size:13px;color:var(--grey-light);margin:0;">El usuario dice un número diferente, no dice nada, o repite &rarr; caso rechazado por OTP.</p>
+      </div>
+      <div style="background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
+        <div class="dot dot-warn" style="margin-top:4px;"></div>
+        <p style="font-size:13px;color:var(--grey-light);margin:0;">Si el audio es poco claro, usa velocidades más lentas (0.5x) para escuchar con más detalle.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h3>Criterios &mdash; Document Check</h3>
+  <p style="color: var(--grey-light); font-size: 13px; margin-bottom: 20px;">Ejemplos de documentos aprobados y rechazados:</p>
+
+  <div class="criteria-grid">
+    <div class="crit-card ok">
+      <div class="crit-doc ok">
+        <div style="height:6px;background:rgba(76,175,80,0.4);border-radius:2px;width:55%;"></div>
+        <div style="height:5px;background:rgba(76,175,80,0.25);border-radius:2px;width:90%;"></div>
+        <div style="height:5px;background:rgba(76,175,80,0.25);border-radius:2px;width:70%;"></div>
+        <div style="height:8px;background:rgba(76,175,80,0.15);border-radius:2px;width:100%;margin-top:2px;"></div>
+        <div class="crit-dot ok"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="crit-status ok">APROBADO</div>
+      <div class="crit-desc">Nítido, vigente, original</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-doc bad">
+        <div style="height:10px;background:rgba(255,77,77,0.12);border-radius:4px;width:80%;"></div>
+        <div style="height:8px;background:rgba(255,77,77,0.08);border-radius:4px;width:100%;"></div>
+        <div style="height:8px;background:rgba(255,77,77,0.06);border-radius:4px;width:65%;"></div>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">Imagen borrosa o sin foco</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-doc bad">
+        <div style="height:5px;background:rgba(255,77,77,0.2);border-radius:2px;width:60%;"></div>
+        <div style="height:5px;background:rgba(255,77,77,0.15);border-radius:2px;width:80%;"></div>
+        <div style="position:absolute;bottom:7px;left:8px;right:8px;background:#ff4d4d;color:#fff;font-size:7px;font-weight:800;padding:2px 0;border-radius:3px;letter-spacing:0.1em;text-align:center;">VENCIDO</div>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">Documento vencido o expirado</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-doc bad" style="display:flex;align-items:center;justify-content:center;">
+        <div style="width:68px;height:50px;border:2px solid rgba(255,77,77,0.5);border-radius:3px;display:flex;flex-direction:column;gap:4px;padding:5px;">
+          <div style="height:4px;background:rgba(255,77,77,0.2);border-radius:2px;"></div>
+          <div style="height:4px;background:rgba(255,77,77,0.15);border-radius:2px;width:70%;"></div>
+        </div>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">Captura de pantalla o sobretomado</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-doc bad" style="display:flex;align-items:center;justify-content:center;">
+        <svg width="90" height="46" viewBox="0 0 90 56" fill="none" style="transform:rotate(180deg);">
+          <rect x="4" y="4" width="82" height="48" rx="3" fill="#2a0d0d" stroke="rgba(255,77,77,0.3)" stroke-width="1"/>
+          <rect x="10" y="12" width="35" height="10" rx="2" fill="rgba(255,77,77,0.25)"/>
+          <rect x="10" y="26" width="50" height="6" rx="2" fill="rgba(255,77,77,0.15)"/>
+        </svg>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">Documento al revés o mal orientado</div>
+    </div>
+
+    <div class="crit-card bad">
+      <div class="crit-doc bad" style="display:flex;align-items:center;justify-content:center;">
+        <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <div style="background:rgba(255,77,77,0.85);color:#fff;font-size:8px;font-weight:800;padding:3px 10px;border-radius:3px;letter-spacing:0.1em;">COPIA</div>
+          </div>
+        </div>
+        <div class="crit-dot bad"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="#fff" stroke-width="2"/><line x1="10" y1="2" x2="2" y2="10" stroke="#fff" stroke-width="2"/></svg></div>
+      </div>
+      <div class="crit-status bad">RECHAZADO</div>
+      <div class="crit-desc">Copia del documento, no original</div>
+    </div>
+  </div>
+
+  <div style="background:rgba(255,77,77,0.07);border:1px solid rgba(255,77,77,0.3);border-radius:10px;padding:16px 20px;margin-bottom:40px;display:flex;gap:10px;align-items:flex-start;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p style="font-size:13px;color:var(--grey-light);margin:0;">Regla universal en todos los países: si el usuario aparece como <strong style="color:#ff4d4d;">fallecido</strong> al consultar la entidad gubernamental, el caso se rechaza sin excepciones.</p>
+  </div>
+
+  <div class="divider"></div>
+  <h3>Consulta a la entidad gubernamental</h3>
+  <p style="color:var(--grey-light);font-size:14px;margin-bottom:16px;max-width:600px;">Al hacer clic en "Consultar entidad gubernamental" (solo disponible para Document Check), se habilitan los campos de cédula y código dactilar según el país.</p>
+
+  <div class="alert alert-warn" style="margin-bottom: 24px;">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p>El botón <strong>"Consultar Entidad Gubernamental"</strong> solo aparece en casos de <strong>Document Check</strong>.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card"><div class="card-title">Información que brinda la entidad</div><p>Dependiendo del país: foto, firma, nombres, fecha de expedición, estado (vigente / fallecido / vencido). Verifica que todo coincida con la cédula del usuario.</p></div>
+    <div class="card"><div class="card-title">Causales de rechazo inmediato</div><p>Aparece como fallecido, datos no coinciden (nombre, fecha, etc.), documento vencido, o el estado devuelto es anulado o inexistente.</p></div>
+  </div>
+</section>
+
+<!-- 05 - PAISES -->
+<section id="paises">
+  <div class="sec-num">05 &mdash; Por país</div>
+  <h2>Validación por país</h2>
+
+  <div class="country-tabs">
+    <button class="tab-btn active" onclick="showTab('col', this)">
+      <svg width="20" height="13" viewBox="0 0 20 13" style="border-radius:2px;"><rect width="20" height="13" fill="#FCD116"/><rect y="6.5" width="20" height="3.3" fill="#003893"/><rect y="9.8" width="20" height="3.2" fill="#CE1126"/></svg>
+      Colombia
+    </button>
+    <button class="tab-btn" onclick="showTab('per', this)">
+      <svg width="20" height="13" viewBox="0 0 20 13" style="border-radius:2px;"><rect width="20" height="13" fill="#CE1126"/><rect x="6.5" width="7" height="13" fill="#F5F5F5"/></svg>
+      Perú
+    </button>
+    <button class="tab-btn" onclick="showTab('pan', this)">
+      <svg width="20" height="13" viewBox="0 0 20 13" style="border-radius:2px;"><rect width="10" height="6.5" fill="#F5F5F5"/><rect x="10" width="10" height="6.5" fill="#CE1126"/><rect y="6.5" width="10" height="6.5" fill="#003893"/><rect x="10" y="6.5" width="10" height="6.5" fill="#F5F5F5"/><circle cx="5" cy="3.25" r="1.5" fill="#CE1126"/><circle cx="15" cy="9.75" r="1.5" fill="#003893"/></svg>
+      Panamá
+    </button>
+    <button class="tab-btn" onclick="showTab('ecu', this)">
+      <svg width="20" height="13" viewBox="0 0 20 13" style="border-radius:2px;"><rect width="20" height="13" fill="#FCD116"/><rect y="4.3" width="20" height="4.3" fill="#003893"/><rect y="8.7" width="20" height="4.3" fill="#CE1126"/></svg>
+      Ecuador
+    </button>
+  </div>
+
+  <!-- COLOMBIA -->
+  <div class="tab-content active" id="tab-col">
+    <div class="alert alert-warn" style="margin-bottom:28px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p><strong>Colombia:</strong> La entidad gubernamental NO entrega foto del Registro Civil. La validación es distinta a otros países.</p>
+    </div>
+    <div class="country-block">
+      <div class="country-docs">
+        <div>
+          <div class="doc-label">Cédula amarilla con hologramas</div>
+          <div class="id-card" style="border-color:#3a3000;">
+            <div class="id-header" style="color:#a89200;">República de Colombia &mdash; Identificación Personal</div>
+            <div class="id-body">
+              <div class="id-photo" style="background:#3a3000;"><svg width="24" height="30" viewBox="0 0 24 30" fill="none"><circle cx="12" cy="9" r="6" fill="#5a4a00"/><path d="M1 28c0-7 22-7 22 0" fill="#5a4a00"/></svg></div>
+              <div class="id-fields">
+                <div class="id-field"><label style="color:#a89200;">Número</label><div class="id-bar long" style="background:#3a3000;"></div></div>
+                <div class="id-field"><label style="color:#a89200;">Apellidos</label><div class="id-bar mid" style="background:#3a3000;"></div></div>
+                <div class="id-field"><label style="color:#a89200;">Nombres</label><div class="id-bar long" style="background:#3a3000;"></div></div>
+                <div class="id-field"><label style="color:#a89200;">Firma</label><div style="width:45px;height:1px;background:#a89200;margin-top:4px;"></div></div>
+              </div>
+            </div>
+            <div class="id-barcode" style="background:#3a3000;"></div>
+          </div>
+        </div>
+        <div>
+          <div class="doc-label">Cédula digital Tricolor</div>
+          <div class="id-card">
+            <div class="id-header">República de Colombia &mdash; Cédula Digital</div>
+            <div class="id-body">
+              <div class="id-photo"><svg width="24" height="30" viewBox="0 0 24 30" fill="none"><circle cx="12" cy="9" r="6" fill="#444"/><path d="M1 28c0-7 22-7 22 0" fill="#444"/></svg></div>
+              <div class="id-fields">
+                <div class="id-field"><label>NUIP</label><div class="id-bar long"></div></div>
+                <div class="id-field"><label>Apellidos</label><div class="id-bar mid"></div></div>
+                <div class="id-field"><label>Nombres</label><div class="id-bar long"></div></div>
+                <div class="id-field"><label>Fecha nacimiento</label><div class="id-bar short"></div></div>
+              </div>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:3px;">
+              <div style="height:4px;flex:1;background:#c00;border-radius:2px;"></div>
+              <div style="height:4px;flex:1;background:#f5a623;border-radius:2px;"></div>
+              <div style="height:4px;flex:1;background:#4caf50;border-radius:2px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="country-info">
+        <h4>Qué verificar en Colombia</h4>
+        <ul class="check-list">
+          <li><div class="dot dot-ok"></div>Número de cédula</li>
+          <li><div class="dot dot-ok"></div>Fecha de expedición</li>
+          <li><div class="dot dot-ok"></div>Que no esté reportado como fallecido</li>
+          <li><div class="dot dot-ok"></div>Tipo de cédula (amarilla o tricolor digital)</li>
+          <li><div class="dot dot-bad"></div>Rechazar si aparece como fallecido</li>
+          <li><div class="dot dot-bad"></div>Rechazar si la fecha de expedición no coincide</li>
+          <li><div class="dot dot-warn"></div>Sin foto oficial &mdash; comparación facial solo con imágenes del usuario</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERU -->
+  <div class="tab-content" id="tab-per">
+    <div class="alert alert-ok" style="margin-bottom:28px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <p><strong>Perú:</strong> La entidad entrega foto y firma del titular. La comparación facial es posible con los datos oficiales.</p>
+    </div>
+    <div class="country-block">
+      <div class="country-docs">
+        <div>
+          <div class="doc-label">DNI &mdash; Documento Nacional de Identidad (Frente)</div>
+          <svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;border:1px solid #3a0000;display:block;">
+            <rect width="320" height="200" rx="10" fill="#0a1a4a"/>
+            <rect width="320" height="8" fill="#CE1126"/>
+            <rect y="192" width="320" height="8" fill="#CE1126"/>
+            <path d="M0 80 Q80 60 160 80 Q240 100 320 80" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none"/>
+            <path d="M0 100 Q80 80 160 100 Q240 120 320 100" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none"/>
+            <text x="160" y="22" text-anchor="middle" font-size="6" fill="rgba(255,255,255,0.7)" font-family="Arial" letter-spacing="1">REGISTRO NACIONAL DE IDENTIFICACION Y ESTADO CIVIL</text>
+            <text x="160" y="32" text-anchor="middle" font-size="5" fill="rgba(255,255,255,0.5)" font-family="Arial">DOCUMENTO NACIONAL DE IDENTIDAD</text>
+            <text x="300" y="31" text-anchor="end" font-size="9" fill="#fff" font-family="Arial" font-weight="bold" letter-spacing="1">42736327</text>
+            <rect x="14" y="40" width="72" height="90" rx="4" fill="#0d2060" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <circle cx="50" cy="68" r="14" fill="#1a3a8a"/>
+            <path d="M22 128c0-16 56-16 56 0" fill="#1a3a8a"/>
+            <text x="96" y="50" font-size="5.5" fill="rgba(255,255,255,0.45)" font-family="Arial">PRIMER APELLIDO</text>
+            <rect x="96" y="53" width="110" height="7" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="96" y="70" font-size="5.5" fill="rgba(255,255,255,0.45)" font-family="Arial">SEGUNDO APELLIDO</text>
+            <rect x="96" y="73" width="90" height="7" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="96" y="90" font-size="5.5" fill="rgba(255,255,255,0.45)" font-family="Arial">NOMBRES</text>
+            <rect x="96" y="93" width="120" height="7" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="96" y="110" font-size="5.5" fill="rgba(255,255,255,0.45)" font-family="Arial">FECHA NACIMIENTO</text>
+            <rect x="96" y="113" width="70" height="7" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="160" y="155" text-anchor="middle" font-size="5" fill="rgba(255,255,255,0.15)" font-family="monospace" letter-spacing="2">I&lt;PER42736327&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</text>
+            <text x="160" y="165" text-anchor="middle" font-size="5" fill="rgba(255,255,255,0.15)" font-family="monospace" letter-spacing="2">8206174M1611139PER&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;6</text>
+          </svg>
+        </div>
+      </div>
+      <div class="country-info">
+        <h4>Qué verificar en Perú</h4>
+        <ul class="check-list">
+          <li><div class="dot dot-ok"></div>Número de DNI</li>
+          <li><div class="dot dot-ok"></div>Nombres y apellidos completos</li>
+          <li><div class="dot dot-ok"></div>Fecha de nacimiento</li>
+          <li><div class="dot dot-ok"></div>Foto del Registro Civil coincide con el usuario</li>
+          <li><div class="dot dot-ok"></div>Frente y reverso coinciden entre sí</li>
+          <li><div class="dot dot-bad"></div>Rechazar si algún dato no coincide con la entidad</li>
+          <li><div class="dot dot-bad"></div>Rechazar si aparece como fallecido</li>
+          <li><div class="dot dot-bad"></div>Rechazar si la foto oficial no corresponde al usuario</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANAMA -->
+  <div class="tab-content" id="tab-pan">
+    <div class="alert alert-warn" style="margin-bottom:28px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p><strong>Panamá:</strong> No hay foto oficial. La comparación facial se hace únicamente con las imágenes y el video enviados por el usuario.</p>
+    </div>
+    <div class="country-block">
+      <div class="country-docs">
+        <div>
+          <div class="doc-label">Cédula de Identidad Personal (Frente)</div>
+          <svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;border:1px solid #003893;display:block;">
+            <rect width="320" height="200" rx="10" fill="#f0f4ff"/>
+            <rect width="320" height="38" fill="#003893"/>
+            <text x="160" y="14" text-anchor="middle" font-size="6.5" fill="rgba(255,255,255,0.9)" font-family="Arial" font-weight="bold" letter-spacing="1">REPUBLICA DE PANAMA</text>
+            <text x="160" y="25" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,0.7)" font-family="Arial">TRIBUNAL ELECTORAL</text>
+            <text x="160" y="34" text-anchor="middle" font-size="5" fill="rgba(255,255,255,0.6)" font-family="Arial">CEDULA DE IDENTIDAD PERSONAL</text>
+            <rect y="38" width="80" height="3" fill="#F5F5F5"/>
+            <rect x="80" y="38" width="80" height="3" fill="#CE1126"/>
+            <rect x="160" y="38" width="80" height="3" fill="#003893"/>
+            <rect x="240" y="38" width="80" height="3" fill="#F5F5F5"/>
+            <text x="306" y="62" text-anchor="end" font-size="10" fill="#003893" font-family="Arial" font-weight="bold" letter-spacing="2">8-123-456</text>
+            <rect x="14" y="46" width="72" height="92" rx="4" fill="#c8d4f0" stroke="#003893" stroke-width="1"/>
+            <circle cx="50" cy="74" r="14" fill="#8a9fd0"/>
+            <path d="M22 136c0-16 56-16 56 0" fill="#8a9fd0"/>
+            <text x="96" y="55" font-size="5.5" fill="#003893" font-family="Arial" font-weight="bold">APELLIDOS Y NOMBRES</text>
+            <rect x="96" y="58" width="150" height="8" rx="2" fill="rgba(0,56,147,0.1)" stroke="rgba(0,56,147,0.2)" stroke-width="0.5"/>
+            <text x="96" y="76" font-size="5.5" fill="#003893" font-family="Arial" font-weight="bold">NACIONALIDAD</text>
+            <rect x="96" y="79" width="80" height="7" rx="2" fill="rgba(0,56,147,0.1)" stroke="rgba(0,56,147,0.2)" stroke-width="0.5"/>
+            <text x="96" y="96" font-size="5.5" fill="#003893" font-family="Arial" font-weight="bold">FECHA DE NACIMIENTO</text>
+            <rect x="96" y="99" width="80" height="7" rx="2" fill="rgba(0,56,147,0.1)" stroke="rgba(0,56,147,0.2)" stroke-width="0.5"/>
+            <rect x="96" y="135" width="60" height="8" rx="3" fill="#4caf50"/>
+            <text x="126" y="141" text-anchor="middle" font-size="5" fill="#fff" font-family="Arial" font-weight="bold">VIGENTE</text>
+          </svg>
+        </div>
+      </div>
+      <div class="country-info">
+        <h4>Qué verificar en Panamá</h4>
+        <ul class="check-list">
+          <li><div class="dot dot-ok"></div>Número de cédula</li>
+          <li><div class="dot dot-ok"></div>Estado del documento (vigente / vencido / anulado / inexistente)</li>
+          <li><div class="dot dot-ok"></div>Nombre completo</li>
+          <li><div class="dot dot-ok"></div>Fecha y lugar de nacimiento</li>
+          <li><div class="dot dot-bad"></div>Rechazar si datos no coinciden</li>
+          <li><div class="dot dot-bad"></div>Rechazar si estado es anulado o inexistente</li>
+          <li><div class="dot dot-warn"></div>Sin foto oficial &mdash; comparación facial solo con imágenes del usuario</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECUADOR -->
+  <div class="tab-content" id="tab-ecu">
+    <div class="alert alert-ok" style="margin-bottom:28px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <p><strong>Ecuador:</strong> La entidad entrega información detallada incluyendo <strong>código dactilar</strong>. Se validan nombre, estado civil, fecha de nacimiento y coincidencia de datos.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;">
+        <div>
+          <div class="doc-label">Cédula de Ciudadanía &mdash; Frente</div>
+          <svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;border:1px solid rgba(255,200,0,0.4);display:block;">
+            <defs><linearGradient id="ecubg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f8f4e0"/><stop offset="100%" stop-color="#ede8c8"/></linearGradient></defs>
+            <rect width="320" height="200" rx="10" fill="url(#ecubg)"/>
+            <rect width="8" height="200" fill="#FCD116" opacity="0.9"/>
+            <rect x="8" width="4" height="200" fill="#003893" opacity="0.7"/>
+            <rect x="12" width="4" height="200" fill="#CE1126" opacity="0.7"/>
+            <text x="105" y="18" font-size="5.5" fill="#555" font-family="Arial">DIRECCION GENERAL DE REGISTRO CIVIL,</text>
+            <text x="105" y="26" font-size="5.5" fill="#555" font-family="Arial">IDENTIFICACION Y CEDULACION</text>
+            <text x="105" y="38" font-size="9" fill="#003893" font-family="Arial" font-weight="bold" letter-spacing="1">REPUBLICA DEL ECUADOR</text>
+            <rect x="200" y="42" width="110" height="18" rx="3" fill="rgba(206,17,38,0.1)" stroke="#CE1126" stroke-width="0.5"/>
+            <text x="255" y="50" text-anchor="middle" font-size="5" fill="#CE1126" font-family="Arial" font-weight="bold">CEDULA DE CIUDADANIA</text>
+            <text x="255" y="57" text-anchor="middle" font-size="9" fill="#CE1126" font-family="Arial" font-weight="bold" letter-spacing="1">171632987-7</text>
+            <rect x="22" y="42" width="68" height="86" rx="4" fill="#d4cba0" stroke="#999" stroke-width="0.5"/>
+            <circle cx="56" cy="70" r="13" fill="#a09060"/>
+            <path d="M26 128c0-14 60-14 60 0" fill="#a09060"/>
+            <text x="100" y="54" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">APELLIDOS Y NOMBRES</text>
+            <rect x="100" y="66" width="130" height="7" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="100" y="82" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">LUGAR DE NACIMIENTO</text>
+            <rect x="100" y="84" width="130" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="100" y="98" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">FECHA DE NACIMIENTO</text>
+            <rect x="100" y="100" width="70" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="100" y="114" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">NACIONALIDAD</text>
+            <rect x="100" y="116" width="70" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="180" y="114" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">SEXO</text>
+            <rect x="180" y="116" width="30" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="100" y="130" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">ESTADO CIVIL</text>
+            <rect x="100" y="132" width="60" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <rect y="186" width="320" height="5" fill="#FCD116"/>
+            <rect y="191" width="320" height="5" fill="#003893"/>
+            <rect y="196" width="320" height="4" fill="#CE1126"/>
+          </svg>
+        </div>
+        <div>
+          <div class="doc-label">Cédula de Ciudadanía &mdash; Reverso</div>
+          <svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;border:1px solid rgba(255,200,0,0.4);display:block;">
+            <defs><linearGradient id="ecubgr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f8f4e0"/><stop offset="100%" stop-color="#ede8c8"/></linearGradient></defs>
+            <rect width="320" height="200" rx="10" fill="url(#ecubgr)"/>
+            <rect width="8" height="200" fill="#FCD116" opacity="0.9"/>
+            <rect x="8" width="4" height="200" fill="#003893" opacity="0.7"/>
+            <rect x="12" width="4" height="200" fill="#CE1126" opacity="0.7"/>
+            <rect x="235" y="10" width="76" height="18" rx="3" fill="rgba(206,17,38,0.1)" stroke="#CE1126" stroke-width="0.5"/>
+            <text x="273" y="20" text-anchor="middle" font-size="5" fill="#CE1126" font-family="Arial">CODIGO UNICO</text>
+            <text x="273" y="26" text-anchor="middle" font-size="8" fill="#CE1126" font-family="Arial" font-weight="bold">A13442V65N</text>
+            <text x="20" y="22" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">INSTRUCCION</text>
+            <rect x="20" y="24" width="80" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="22" y="30" font-size="5.5" fill="#222" font-family="Arial">SUPERIOR</text>
+            <text x="110" y="22" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">PROFESION / OCUPACION</text>
+            <rect x="110" y="24" width="110" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="112" y="30" font-size="5.5" fill="#222" font-family="Arial">ECONOMISTA</text>
+            <text x="20" y="42" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">APELLIDOS Y NOMBRES DEL PADRE</text>
+            <rect x="20" y="44" width="200" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="20" y="60" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">APELLIDOS Y NOMBRES DE LA MADRE</text>
+            <rect x="20" y="62" width="200" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="20" y="78" font-size="5" fill="#003893" font-family="Arial" font-weight="bold">LUGAR Y FECHA DE EXPEDICION</text>
+            <rect x="20" y="80" width="120" height="6" rx="1" fill="rgba(0,56,147,0.08)"/>
+            <text x="22" y="86" font-size="5.5" fill="#222" font-family="Arial">QUITO  /  2016-08-03</text>
+            <text x="20" y="96" font-size="5" fill="#CE1126" font-family="Arial" font-weight="bold">FECHA DE EXPIRACION</text>
+            <rect x="20" y="98" width="90" height="8" rx="2" fill="rgba(206,17,38,0.08)" stroke="#CE1126" stroke-width="0.5"/>
+            <text x="22" y="106" font-size="6.5" fill="#CE1126" font-family="Arial" font-weight="bold">2026-08-03</text>
+            <rect x="240" y="40" width="65" height="80" rx="4" fill="rgba(0,0,0,0.06)" stroke="#999" stroke-width="0.5"/>
+            <ellipse cx="272" cy="72" rx="20" ry="26" fill="none" stroke="#888" stroke-width="0.6"/>
+            <ellipse cx="272" cy="72" rx="15" ry="20" fill="none" stroke="#888" stroke-width="0.5"/>
+            <ellipse cx="272" cy="72" rx="10" ry="13" fill="none" stroke="#888" stroke-width="0.5"/>
+            <ellipse cx="272" cy="72" rx="5" ry="7" fill="none" stroke="#888" stroke-width="0.5"/>
+            <text x="272" y="128" text-anchor="middle" font-size="5" fill="#666" font-family="Arial">DACTILAR</text>
+            <path d="M22 148 Q40 140 58 148 Q70 154 80 148" stroke="#333" stroke-width="0.8" fill="none"/>
+            <rect x="22" y="150" width="72" height="0.5" fill="#555"/>
+            <text x="58" y="158" text-anchor="middle" font-size="5" fill="#666" font-family="Arial">DIRECTOR GENERAL</text>
+            <path d="M140 148 Q158 142 176 148 Q188 154 200 148" stroke="#333" stroke-width="0.8" fill="none"/>
+            <rect x="140" y="150" width="72" height="0.5" fill="#555"/>
+            <text x="176" y="158" text-anchor="middle" font-size="5" fill="#666" font-family="Arial">FIRMA DEL CEDULADO</text>
+            <rect x="265" y="158" width="42" height="9" rx="1" fill="#FCD116"/>
+            <rect x="265" y="167" width="42" height="7" fill="#003893"/>
+            <rect x="265" y="174" width="42" height="7" rx="1" fill="#CE1126"/>
+            <rect y="186" width="320" height="5" fill="#FCD116"/>
+            <rect y="191" width="320" height="5" fill="#003893"/>
+            <rect y="196" width="320" height="4" fill="#CE1126"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="country-info" style="max-width:560px;">
+        <h4>Qué verificar en Ecuador</h4>
+        <ul class="check-list">
+          <li><div class="dot dot-ok"></div>Número de cédula</li>
+          <li><div class="dot dot-ok"></div>Nombres y apellidos completos</li>
+          <li><div class="dot dot-ok"></div>Fecha y lugar de nacimiento</li>
+          <li><div class="dot dot-ok"></div>Nacionalidad y estado civil</li>
+          <li><div class="dot dot-ok"></div>Datos del Registro Civil coinciden con la cédula</li>
+          <li><div class="dot dot-ok"></div>Código dactilar (reverso) para la consulta gubernamental</li>
+          <li><div class="dot dot-bad"></div>Rechazar si algún dato no coincide</li>
+          <li><div class="dot dot-bad"></div>Rechazar si aparece como fallecido</li>
+          <li><div class="dot dot-bad"></div>Rechazar si el documento está vencido</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 - GLOSARIO -->
+<section id="glosario">
+  <div class="sec-num">06 &mdash; Referencia</div>
+  <h2>Glosario</h2>
+  <div class="glosario-grid">
+    <div class="glosario-item">
+      <div class="glosario-term">Document Check</div>
+      <div class="glosario-def">Proceso de verificación de documentos de identidad del usuario (cédula, DNI, etc.), donde se valida su autenticidad y coincidencia con la información oficial.</div>
+    </div>
+    <div class="glosario-item">
+      <div class="glosario-term">Liveness</div>
+      <div class="glosario-def">Proceso biométrico para confirmar que el usuario está vivo, presente y realizando la verificación en tiempo real. Incluye movimiento de rostro o pronunciación de un OTP.</div>
+    </div>
+    <div class="glosario-item">
+      <div class="glosario-term">OTP</div>
+      <div class="glosario-def">Código o frase enviada por el bot que el usuario debe pronunciar correctamente durante la prueba biométrica.</div>
+    </div>
+    <div class="glosario-item">
+      <div class="glosario-term">Facematch</div>
+      <div class="glosario-def">Verificación de coincidencia facial entre la selfie o fotograma del video del usuario y la foto del documento de identidad.</div>
+    </div>
+    <div class="glosario-item">
+      <div class="glosario-term">Review</div>
+      <div class="glosario-def">Evaluar, analizar o verificar algo antes de aprobarlo o tomar una decisión. Estado que requiere que un operador humano revise el caso manualmente.</div>
+    </div>
+    <div class="glosario-item">
+      <div class="glosario-term">Regula</div>
+      <div class="glosario-def">Plataforma de verificación de documentos mediante reconocimiento óptico. Soporta más de 14,000 tipos de documentos de 250+ países. <a href="https://regulaforensics.com/es/" target="_blank" rel="noopener">regulaforensics.com</a></div>
+    </div>
+    <div class="glosario-item">
+      <div class="glosario-term">HIL</div>
+      <div class="glosario-def">Human In The Loop. Sistema donde un operador humano interviene para revisar y decidir sobre casos que la automatización no pudo resolver con certeza.</div>
+    </div>
+    <div class="glosario-item">
+      <div class="glosario-term">SLA</div>
+      <div class="glosario-def">Service Level Agreement. El cumplimiento del SLA significa que se están respetando los tiempos acordados para el servicio. En este sistema el tiempo máximo es de 3 minutos por caso.</div>
+    </div>
+    <div class="glosario-item">
+      <div class="glosario-term">Estado Activo</div>
+      <div class="glosario-def">Punto verde junto a tu nombre de usuario. Indica que estás disponible en el sistema y los casos pueden empezar a llegar.</div>
+    </div>
+  </div>
+</section>
+
+<!--
+  ╔══════════════════════════════════════════════════╗
+  ║  HORARIOS — edita los textos dentro de cada     ║
+  ║  <span> en los .sslot de abajo para actualizar. ║
+  ╚══════════════════════════════════════════════════╝
+-->
+<section id="horarios" class="schedule-section">
+  <div class="sec-num">07 &mdash; Referencia</div>
+  <h2 class="schedule-heading">Horarios de atención</h2>
+  <p class="schedule-note">Estos horarios pueden modificarse en cualquier momento editando este archivo.</p>
+  <div class="schedule-slots">
+    <div class="sslot">
+      <strong>Lunes – Viernes</strong>
+      <span>8:00 am – 9:00 pm</span>
+    </div>
+    <div class="sslot">
+      <strong>Sábados</strong>
+      <span>9:00 am – 9:00 pm</span>
+    </div>
+    <div class="sslot">
+      <strong>Domingos</strong>
+      <span>9:00 am – 9:00 pm</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">HIL &mdash; Biometría v2</div>
+  <div class="footer-note">Guía interna de operadores &middot; Uso confidencial</div>
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(function(t) {
+      t.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    var tab = document.getElementById('tab-' + id);
+    if (tab) tab.classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
